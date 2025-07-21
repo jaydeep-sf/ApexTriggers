@@ -1,0 +1,132 @@
+<template>
+    <lightning-card>
+        <div class="dashboard-container">
+            <!-- Loading Spinner -->
+            <template if:true={isLoading}>
+                <div class="loading-container">
+                    <lightning-spinner alternative-text="Loading building data..."></lightning-spinner>
+                </div>
+            </template>
+
+            <!-- Error Display -->
+            <template if:true={error}>
+                <div class="error-container">
+                    <lightning-formatted-text value={error.body.message}></lightning-formatted-text>
+                </div>
+            </template>
+
+            <!-- Building Dashboard -->
+            <template if:true={hasData}>
+                <!-- Building Header -->
+                <div class="building-header">
+                    <div class="building-image-container">
+                        <img src={buildingImageUrl} alt="Building Image" class="building-image"/>
+                    </div>
+                    <div class="building-info">
+                        <h2 class="building-name">{buildingData.building.Name}</h2>
+                        <p class="building-address">{buildingData.building.Address__c}</p>
+                        <p class="total-rsf">Total RSF: {buildingData.building.Total_RSF__c}</p>
+                    </div>
+                </div>
+
+                <!-- Floor Plans Table -->
+                <div class="floors-container">
+                    <table class="floors-table">
+                        <thead>
+                            <tr class="table-header">
+                                <th class="floor-col">Floor</th>
+                                <th class="rsf-col">RSF</th>
+                                <th class="usf-col">USF</th>
+                                <th class="load-factor-col">Load Factor</th>
+                                <th class="gross-sf-col">Gross SF</th>
+                                <th class="floor-plan-col">Floor Plan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={formattedFloors} for:item="floor">
+                                <tr key={floor.Id} class="floor-row">
+                                    <!-- Floor Number -->
+                                    <td class="floor-number-cell">
+                                        <div class="floor-number">{floor.floorNumber}</div>
+                                    </td>
+                                    
+                                    <!-- RSF -->
+                                    <td class="data-cell">
+                                        <lightning-formatted-number value={floor.RSF__c} format-style="decimal"></lightning-formatted-number>
+                                    </td>
+                                    
+                                    <!-- USF -->
+                                    <td class="data-cell">
+                                        <lightning-formatted-number value={floor.USF__c} format-style="decimal"></lightning-formatted-number>
+                                    </td>
+                                    
+                                    <!-- Load Factor -->
+                                    <td class="data-cell">
+                                        <lightning-formatted-number value={floor.Load_Factor__c} format-style="percent" maximum-fraction-digits="2"></lightning-formatted-number>
+                                    </td>
+                                    
+                                    <!-- Gross SF -->
+                                    <td class="data-cell">
+                                        <lightning-formatted-number value={floor.Gross_SF__c} format-style="decimal"></lightning-formatted-number>
+                                    </td>
+                                    
+                                    <!-- Floor Plan Visualization -->
+                                    <td class="floor-plan-cell">
+                                        <div class="floor-plan-container">
+                                            <template for:each={floor.spaces} for:item="space">
+                                                <div key={space.Id} 
+                                                     class="space-block" 
+                                                     style={space.style}
+                                                     data-space-id={space.Id}>
+                                                    <div class="space-content" 
+                                                         style="background-color: {space.bgColor}; color: {space.textColor};">
+                                                        <div class="space-name">{space.displayName}</div>
+                                                        <div class="space-rsf">
+                                                            <lightning-formatted-number value={space.RSF__c} format-style="decimal"></lightning-formatted-number> RSF
+                                                        </div>
+                                                        <template if:true={space.USF__c}>
+                                                            <div class="space-usf">
+                                                                (<lightning-formatted-number value={space.USF__c} format-style="decimal"></lightning-formatted-number> USF / 
+                                                                <lightning-formatted-number value={space.Load_Factor__c} format-style="percent" maximum-fraction-digits="1"></lightning-formatted-number> LF)
+                                                            </div>
+                                                        </template>
+                                                        <template if:true={space.Lease_End_Date__c}>
+                                                            <div class="lease-info">
+                                                                LXD: <lightning-formatted-date value={space.Lease_End_Date__c} format="M/d/yyyy"></lightning-formatted-date>
+                                                            </div>
+                                                        </template>
+                                                        <template if:true={space.Rent_Per_SF__c}>
+                                                            <div class="rent-info">
+                                                                <lightning-formatted-number value={space.Rent_Per_SF__c} format-style="currency"></lightning-formatted-number>/SF
+                                                            </div>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Legend -->
+                <div class="legend-container">
+                    <div class="legend-item">
+                        <div class="legend-color occupied"></div>
+                        <span>Occupied</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color available"></div>
+                        <span>Available</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color sublease"></div>
+                        <span>Available for Sublease</span>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

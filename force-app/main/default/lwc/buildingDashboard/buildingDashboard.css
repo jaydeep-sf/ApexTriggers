@@ -1,0 +1,248 @@
+.dashboard-container {
+    padding: 1rem;
+    font-family: 'Salesforce Sans', sans-serif;
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.error-container {
+    color: #d93829;
+    padding: 1rem;
+    background-color: #ffeaea;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+/* Building Header */
+.building-header {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.building-image-container {
+    margin-right: 2rem;
+}
+
+.building-image {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.building-info {
+    flex: 1;
+}
+
+.building-name {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #16325c;
+    margin: 0 0 0.5rem 0;
+}
+
+.building-address {
+    font-size: 1.1rem;
+    color: #5c6b73;
+    margin: 0 0 0.5rem 0;
+}
+
+.total-rsf {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #16325c;
+    margin: 0;
+}
+
+/* Floors Table */
+.floors-container {
+    margin-bottom: 2rem;
+    overflow-x: auto;
+}
+
+.floors-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.table-header {
+    background: linear-gradient(135deg, #16325c 0%, #2c5aa0 100%);
+    color: white;
+}
+
+.table-header th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    border-right: 1px solid rgba(255,255,255,0.2);
+}
+
+.table-header th:last-child {
+    border-right: none;
+}
+
+.floor-col { width: 80px; }
+.rsf-col { width: 100px; }
+.usf-col { width: 100px; }
+.load-factor-col { width: 120px; }
+.gross-sf-col { width: 120px; }
+.floor-plan-col { width: auto; min-width: 400px; }
+
+.floor-row {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.floor-row:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.floor-row:hover {
+    background-color: #e3f2fd;
+}
+
+.floor-number-cell {
+    text-align: center;
+    padding: 1rem;
+    background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%);
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.data-cell {
+    padding: 1rem;
+    text-align: right;
+    font-weight: 500;
+}
+
+.floor-plan-cell {
+    padding: 0.5rem;
+}
+
+/* Floor Plan Visualization */
+.floor-plan-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 80px;
+    align-items: flex-start;
+}
+
+.space-block {
+    min-width: 120px;
+    min-height: 60px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.space-block:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.space-content {
+    padding: 0.5rem;
+    height: 100%;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    line-height: 1.2;
+}
+
+.space-name {
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+    font-size: 0.8rem;
+}
+
+.space-rsf {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.space-usf, .lease-info, .rent-info {
+    font-size: 0.7rem;
+    opacity: 0.9;
+    margin-bottom: 0.1rem;
+}
+
+/* Legend */
+.legend-container {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.legend-color.occupied {
+    background-color: #4CAF50;
+}
+
+.legend-color.available {
+    background-color: #e5e5e5;
+}
+
+.legend-color.sublease {
+    background-color: #FF9800;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .building-header {
+        flex-direction: column;
+    }
+    
+    .building-image-container {
+        margin-right: 0;
+        margin-bottom: 1rem;
+        align-self: center;
+    }
+    
+    .building-image {
+        width: 250px;
+        height: 150px;
+    }
+    
+    .floor-plan-col {
+        min-width: 300px;
+    }
+    
+    .legend-container {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+}
